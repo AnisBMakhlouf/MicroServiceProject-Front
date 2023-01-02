@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Material Dashboard 2 React - v2.1.0
+* IIT Printing Management - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -26,12 +26,12 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 React components
+// IIT Printing Management components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 
-// Material Dashboard 2 React base styles
+// IIT Printing Management base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
 // Images

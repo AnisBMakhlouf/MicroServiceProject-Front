@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Material Dashboard 2 React - v2.1.0
+* IIT Printing Management - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -18,10 +18,10 @@ import { useEffect } from "react";
 // @mui material components
 import Grid from "@mui/material/Grid";
 
-// Material Dashboard 2 React components
+// IIT Printing Management components
 import MDBox from "components/MDBox";
 
-// Material Dashboard 2 React example components
+// IIT Printing Management example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -37,7 +37,7 @@ import reportsLineChartData from "layouts/rtl/data/reportsLineChartData";
 import Projects from "layouts/rtl/components/Projects";
 import OrdersOverview from "layouts/rtl/components/OrdersOverview";
 
-// Material Dashboard 2 React contexts
+// IIT Printing Management contexts
 import { useMaterialUIController, setDirection } from "context";
 
 function RTL() {

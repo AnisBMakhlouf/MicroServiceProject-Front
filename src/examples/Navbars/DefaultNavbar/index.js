@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Material Dashboard 2 React - v2.1.0
+* IIT Printing Management - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -25,19 +25,19 @@ import PropTypes from "prop-types";
 import Container from "@mui/material/Container";
 import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 React components
+// IIT Printing Management components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
-// Material Dashboard 2 React example components
+// IIT Printing Management example components
 import DefaultNavbarLink from "examples/Navbars/DefaultNavbar/DefaultNavbarLink";
 import DefaultNavbarMobile from "examples/Navbars/DefaultNavbar/DefaultNavbarMobile";
 
-// Material Dashboard 2 React base styles
+// IIT Printing Management base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
-// Material Dashboard 2 React context
+// IIT Printing Management context
 import { useMaterialUIController } from "context";
 
 function DefaultNavbar({ transparent, light, action }) {
@@ -110,7 +110,7 @@ function DefaultNavbar({ transparent, light, action }) {
           pl={{ xs: 0, lg: 1 }}
         >
           <MDTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
-            Material Dashboard 2
+            IIT Printing Management
           </MDTypography>
         </MDBox>
         <MDBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>

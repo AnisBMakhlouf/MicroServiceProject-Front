@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Material Dashboard 2 React - v2.1.0
+* IIT Printing Management - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -22,7 +22,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 React components
+// IIT Printing Management components
 import MDBox from "components/MDBox";
 
 // Custom styles for the SidenavCollapse
@@ -33,7 +33,7 @@ import {
   collapseText,
 } from "examples/Sidenav/styles/sidenavCollapse";
 
-// Material Dashboard 2 React context
+// IIT Printing Management context
 import { useMaterialUIController } from "context";
 
 function SidenavCollapse({ icon, name, active, ...rest }) {

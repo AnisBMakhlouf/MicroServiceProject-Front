@@ -2,26 +2,27 @@
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import { useState, useEffect } from 'react';
-// Material Dashboard 2 React components
+// IIT Printing Management components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-// Material Dashboard 2 React example components
+// IIT Printing Management example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import Icon from "@mui/material/Icon";
+import IconButton from "@mui/material/IconButton";
 import breakpoints from "assets/theme/base/breakpoints";
 // Data
 import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import EnsTableData from "layouts/tables/data/EnsTableData";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 function Tables() {
   const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = projectsTableData();
+  const { columns: pColumns, rows: pRows } = EnsTableData();
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
@@ -62,7 +63,7 @@ function Tables() {
                 <Tab
                   label="Enseignants"
                   icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
+                    <Icon fontSize="small" sx={{ mt: -0.25 }} color="action">
                     </Icon>
                   }
                 />
