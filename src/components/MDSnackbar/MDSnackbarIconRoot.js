@@ -40,7 +40,7 @@ export default styled(Icon)(({ theme, ownerState }) => {
     backgroundImage: backgroundImageValue,
     WebkitTextFillColor: bgWhite || color === "light" ? transparent.main : white.main,
     WebkitBackgroundClip: "text",
-    marginRight: pxToRem(8),
+    marginRight: pxToRem(15),
     fontSize: size.lg,
     transform: `translateY(${pxToRem(-2)})`,
   };

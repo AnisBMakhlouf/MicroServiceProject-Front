@@ -14,15 +14,14 @@ import DataTable from "examples/Tables/DataTable";
 import Icon from "@mui/material/Icon";
 import IconButton from "@mui/material/IconButton";
 import breakpoints from "assets/theme/base/breakpoints";
+
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import EnsTableData from "layouts/tables/data/EnsTableData";
+import PrintRequests_tablesTableData_Pending from "layouts/PrintRequests_tables/data/PrintRequests_tablesTableData_Pending";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-function Tables() {
-  const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = EnsTableData();
+function PrintRequests_tables() {
+  const { columns, rows } = PrintRequests_tablesTableData_Pending();
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
@@ -48,29 +47,30 @@ function Tables() {
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <AppBar position="static">
               <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue} onclick={console.log(tabValue)}>
-                <Tab
-                  label="Admins"
+              <Tab
+                  label="All files"
                   icon={
                     <Icon fontSize="small" sx={{ mt: -0.25 }}>
                     </Icon>
                   }
                 />
                 <Tab
-                  label="Enseignants"
+                  label="Waiting files"
+                  icon={
+                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
+                    </Icon>
+                  }
+                />
+                <Tab
+                  label="Printed files"
                   icon={
                     <Icon fontSize="small" sx={{ mt: -0.25 }} color="action">
-                    </Icon>
-                  }
-                />
-                <Tab
-                  label="Agents de Tirage"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
                     </Icon>
                   }
                 />
@@ -94,11 +94,12 @@ function Tables() {
                 {(() => {
                   switch (tabValue) {
                     case 0:
-                      return 'Admins'
+                      return 'All files'
                     case 1:
-                      return 'Enseignants'
+                      return 'Waiting files'
                     case 2:
-                      return 'Agents de Tirage'
+                      return 'Printed files'
+                    
                   }
                 })()}
                 </MDTypography>
@@ -130,4 +131,4 @@ function Tables() {
   );
 }
 
-export default Tables;
+export default PrintRequests_tables;
