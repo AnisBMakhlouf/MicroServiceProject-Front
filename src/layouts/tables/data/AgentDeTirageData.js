@@ -1,18 +1,11 @@
-
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-import MDBadge from "components/MDBadge";
 import MDButton from "components/MDButton";
 import { useState, useEffect } from 'react';
 import MuiLink from "@mui/material/Link";
-import { Link } from "react-router-dom";
 import userimg from "assets/images/logos/user.png";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
 import axios from "axios";
-import { func } from "prop-types";
-import { refType } from "@mui/utils";
 export default function data() {
   const Author = ({ image, name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>

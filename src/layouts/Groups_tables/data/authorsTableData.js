@@ -37,10 +37,7 @@ export default function data() {
   useEffect(() => {
    axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
     setUsers(response.data);
-  
-  
   }).catch(error=>console.log("api error "))
-    
   }, []);
   console.log(Users);
   return {

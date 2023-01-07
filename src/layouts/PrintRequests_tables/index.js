@@ -1,20 +1,14 @@
-
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import { useState, useEffect } from 'react';
-// IIT Printing Management components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
-// IIT Printing Management example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import Icon from "@mui/material/Icon";
 import IconButton from "@mui/material/IconButton";
 import breakpoints from "assets/theme/base/breakpoints";
-
 // Data
 import PrintRequests_tablesTableData_All from "layouts/PrintRequests_tables/data/PrintRequests_tablesTableData_All";
 import PrintRequests_tablesTableData_printed from "layouts/PrintRequests_tables/data/PrintRequests_tablesTableData_printed";
