@@ -38,10 +38,10 @@ export default function data() {
   const [Users, setUsers] = useState([]);
   const [selectedID, setselectedID] = useState(0);
   function deleteUser(id){
-    axios.post("http://localhost:8085/api/user/delete/"+id,{mode: 'no-cors',}).then((response)=>{
-    console.log('deleted');
-    return false;
-  }).catch(error=>console.log("api error "))
+  //   axios.post("http://localhost:8085/api/user/delete/"+id,{mode: 'no-cors',}).then((response)=>{
+  //   console.log('deleted');
+  //   return false;
+  // }).catch(error=>console.log("api error "))
   }
   useEffect(() => {
    axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{

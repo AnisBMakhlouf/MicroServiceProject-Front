@@ -21,8 +21,7 @@ import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 function Tables() {
-  const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = EnsTableData();
+  let { columns, rows } = authorsTableData();
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
@@ -94,33 +93,26 @@ function Tables() {
                 {(() => {
                   switch (tabValue) {
                     case 0:
+                      ({ columns, rows } = authorsTableData());
                       return 'Admins'
                     case 1:
+                      ({ columns, rows } = EnsTableData());
                       return 'Enseignants'
                     case 2:
+                      ({ columns, rows } = EnsTableData());
                       return 'Agents de Tirage'
                   }
                 })()}
                 </MDTypography>
-              </MDBox>
+              </MDBox>q
               <MDBox pt={3}>
-              {(() => {
-                  switch (tabValue) {
-                    case 0:
-                      return <DataTable
+                     <DataTable
                       table={{ columns, rows }}
                       isSorted={false}
                       entriesPerPage={false}
                       showTotalEntries={false}
                       noEndBorder
-                    />
-                    case 1:
-                      return ''
-                    case 2:
-                      return ''
-                  }
-                })()}
-                
+                    /> 
               </MDBox>
             </Card>
           </Grid>
