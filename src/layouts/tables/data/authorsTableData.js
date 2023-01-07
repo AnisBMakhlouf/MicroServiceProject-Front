@@ -11,6 +11,8 @@ import userimg from "assets/images/logos/user.png";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 import axios from "axios";
+import { func } from "prop-types";
+import { refType } from "@mui/utils";
 export default function data() {
   const Author = ({ image, name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -34,6 +36,13 @@ export default function data() {
   );
 
   const [Users, setUsers] = useState([]);
+  const [selectedID, setselectedID] = useState(0);
+  function deleteUser(id){
+    axios.post("http://localhost:8085/api/user/delete/"+id,{mode: 'no-cors',}).then((response)=>{
+    console.log('deleted');
+    return false;
+  }).catch(error=>console.log("api error "))
+  }
   useEffect(() => {
    axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
     setUsers(response.data);
@@ -58,7 +67,7 @@ export default function data() {
         </MuiLink>),
       Delete: (
         <MuiLink href='' target="_blank" rel="noreferrer">
-          <MDButton color='error'>Delete</MDButton>
+          <MDButton onClick={deleteUser(item.id)} color='error'>Delete</MDButton>
         </MuiLink>)
       })
     )

@@ -60,8 +60,8 @@ function MDSnackbar({ color, icon, title, dateTime, content, close, bgWhite, ...
       TransitionComponent={Fade}
       autoHideDuration={15000}
       anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "right",
+        vertical: "top",
+        horizontal: "center",
       }}
       {...rest}
       action={
@@ -73,8 +73,7 @@ function MDSnackbar({ color, icon, title, dateTime, content, close, bgWhite, ...
       <MDBox
         variant={bgWhite ? "contained" : "gradient"}
         bgColor={bgWhite ? "white" : color}
-        minWidth="50.875rem"
-        minheight="30.875rem"
+        minWidth="15.875rem"
         maxWidth="100%"
         shadow="md"
         borderRadius="md"

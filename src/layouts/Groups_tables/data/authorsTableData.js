@@ -51,7 +51,7 @@ export default function data() {
       { Header: "Delete", accessor: "Delete", align: "center" },
     ],
 
-    rows:  Users.filter((i)=> i.role=='Admin').map(item => ({
+    rows:  Users.map(item => ({
       User: <Author image={userimg} name={item.fullName} email={item.mail} />,
       Role: <Job title={item.role} description="" />,
       Edit: (

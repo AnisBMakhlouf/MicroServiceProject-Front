@@ -108,7 +108,7 @@ export default function data() {
 
     rows:  PrintReq.map(item => ({
         Object: <Author  name={item.file} email={''} />,
-        File: <Author image={fileimg} name="" email="" />,
+        File: <Author href='' onclick='' image={fileimg} name="" email="" />,
         Date: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             {item.date}
