@@ -17,6 +17,7 @@ import breakpoints from "assets/theme/base/breakpoints";
 // Data
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import EnsTableData from "layouts/tables/data/EnsTableData";
+import AgentDeTirageData from "layouts/tables/data/AgentDeTirageData";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -99,20 +100,20 @@ function Tables() {
                       ({ columns, rows } = EnsTableData());
                       return 'Enseignants'
                     case 2:
-                      ({ columns, rows } = EnsTableData());
+                      ({ columns, rows } = AgentDeTirageData());
                       return 'Agents de Tirage'
                   }
                 })()}
                 </MDTypography>
-              </MDBox>q
+              </MDBox>
               <MDBox pt={3}>
-                     <DataTable
-                      table={{ columns, rows }}
-                      isSorted={false}
-                      entriesPerPage={false}
-                      showTotalEntries={false}
-                      noEndBorder
-                    /> 
+                <DataTable
+                 table={{ columns, rows }}
+                 isSorted={false}
+                 entriesPerPage={false}
+                 showTotalEntries={false}
+                 noEndBorder
+                />
               </MDBox>
             </Card>
           </Grid>
