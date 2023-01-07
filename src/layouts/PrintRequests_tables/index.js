@@ -16,12 +16,14 @@ import IconButton from "@mui/material/IconButton";
 import breakpoints from "assets/theme/base/breakpoints";
 
 // Data
+import PrintRequests_tablesTableData_All from "layouts/PrintRequests_tables/data/PrintRequests_tablesTableData_All";
+import PrintRequests_tablesTableData_printed from "layouts/PrintRequests_tables/data/PrintRequests_tablesTableData_printed";
 import PrintRequests_tablesTableData_Pending from "layouts/PrintRequests_tables/data/PrintRequests_tablesTableData_Pending";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 function PrintRequests_tables() {
-  const { columns, rows } = PrintRequests_tablesTableData_Pending();
+  let { columns, rows } = PrintRequests_tablesTableData_All();
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
@@ -94,10 +96,13 @@ function PrintRequests_tables() {
                 {(() => {
                   switch (tabValue) {
                     case 0:
+                       ({ columns, rows } = PrintRequests_tablesTableData_All());
                       return 'All files'
                     case 1:
+                      ({ columns, rows } = PrintRequests_tablesTableData_Pending());
                       return 'Waiting files'
                     case 2:
+                      ({ columns, rows } = PrintRequests_tablesTableData_printed());
                       return 'Printed files'
                     
                   }
@@ -105,23 +110,13 @@ function PrintRequests_tables() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-              {(() => {
-                  switch (tabValue) {
-                    case 0:
-                      return <DataTable
+              <DataTable
                       table={{ columns, rows }}
                       isSorted={false}
                       entriesPerPage={false}
                       showTotalEntries={false}
                       noEndBorder
                     />
-                    case 1:
-                      return ''
-                    case 2:
-                      return ''
-                  }
-                })()}
-                
               </MDBox>
             </Card>
           </Grid>

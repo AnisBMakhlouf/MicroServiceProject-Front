@@ -106,7 +106,7 @@ export default function data() {
       { Header: "Info", accessor: "Info", align: "center" },
     ],
 
-    rows:  PrintReq.map(item => ({
+    rows:  PrintReq.filter((i)=> i.status=='Pending').map(item => ({
         Object: <Author  name={item.file} email={''} />,
         File: <Author href='' onclick='' image={fileimg} name="" email="" />,
         Date: (
@@ -121,14 +121,11 @@ export default function data() {
             <MDBadge badgeContent={item.status} color={item.status == 'Pending' ? "warning" : "success"} variant="gradient" size="sm" />
           </MDBox>
         ),
-        
         Info: (
           <MDButton variant="gradient" color="info" size="small" onClick={function(event){ setselectedID(item.id);setSelectedReq();openSuccessSB();}}  fullWidth>
            info
           {renderSuccessSB}
-          </MDButton>
-                    
-          
+          </MDButton> 
         ),
       }),
     )

@@ -106,7 +106,7 @@ export default function data() {
       { Header: "Info", accessor: "Info", align: "center" },
     ],
 
-    rows:  PrintReq.filter((i)=> i.status=='Done').map(item => ({
+    rows:  PrintReq.map(item => ({
         Object: <Author  name={item.file} email={''} />,
         File: <Author href='' onclick='' image={fileimg} name="" email="" />,
         Date: (
@@ -125,7 +125,9 @@ export default function data() {
           <MDButton variant="gradient" color="info" size="small" onClick={function(event){ setselectedID(item.id);setSelectedReq();openSuccessSB();}}  fullWidth>
            info
           {renderSuccessSB}
-          </MDButton> 
+          </MDButton>
+                    
+          
         ),
       }),
     )
