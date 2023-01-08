@@ -1,6 +1,7 @@
 
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
+import GroupTables from "layouts/Groups_tables";
 import PrintRequests_tables from "layouts/PrintRequests_tables";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
@@ -43,7 +44,7 @@ const routes = [
     key: "Groups",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/Groups_tables",
-    component: <Tables />,
+    component: <GroupTables />,
   },
   {
     type: "collapse",

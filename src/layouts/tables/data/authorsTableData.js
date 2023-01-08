@@ -38,10 +38,10 @@ export default function data() {
   const [Users, setUsers] = useState([]);
   const [selectedID, setselectedID] = useState(0);
   function deleteUser(id){
-  //   axios.post("http://localhost:8085/api/user/delete/"+id,{mode: 'no-cors',}).then((response)=>{
-  //   console.log('deleted');
-  //   return false;
-  // }).catch(error=>console.log("api error "))
+    axios.post("http://localhost:8085/api/user/delete/"+id,{mode: 'no-cors',}).then((response)=>{
+     console.log('deleted');
+    return false;
+   }).catch(error=>console.log("api error "))
   }
   useEffect(() => {
    axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
@@ -66,7 +66,7 @@ export default function data() {
           <MDButton color='secondary'>Edit</MDButton>
         </MuiLink>),
       Delete: (
-        <MuiLink href='' target="_blank" rel="noreferrer">
+        <MuiLink href='' target="_self" rel="noreferrer">
           <MDButton onClick={deleteUser(item.id)} color='error'>Delete</MDButton>
         </MuiLink>)
       })

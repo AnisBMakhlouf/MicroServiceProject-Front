@@ -11,49 +11,50 @@ import userimg from "assets/images/logos/user.png";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 import axios from "axios";
+import { Group } from "@mui/icons-material";
 export default function data() {
-  const Author = ({ image, name, email }) => (
+  const Author = ({ image, groupName }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" />
+      <MDAvatar src={image} name={groupName} size="sm" />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
-          {name}
+          {groupName}
         </MDTypography>
-        <MDTypography variant="caption">{email}</MDTypography>
+       
       </MDBox>
     </MDBox>
   );
 
-  const Job = ({ title, description }) => (
+  const Job = ({studentNB}) => (
     <MDBox lineHeight={1} textAlign="left">
       <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-        {title}
+        {studentNB}
       </MDTypography>
-      <MDTypography variant="caption">{description}</MDTypography>
     </MDBox>
   );
 
-  const [Users, setUsers] = useState([]);
+
+  const [Groups, setGroups] = useState([]);
   useEffect(() => {
-   axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
-    setUsers(response.data);
+   axios.get("http://localhost:8087/api/group/all",{mode: 'no-cors',}).then((response)=>{
+    setGroups(response.data);
   
   
   }).catch(error=>console.log("api error "))
     
   }, []);
-  console.log(Users);
+  console.log(Groups);
   return {
     columns: [
-      { Header: "User", accessor: "User", width: "45%", align: "left" },
-      { Header: "Role", accessor: "Role", align: "left" },
+      { Header: "Group", accessor: "groupName", width: "45%", align: "left" },
+      { Header: "Students Number", accessor: "studentNB", align: "left" },
       { Header: "Edit", accessor: "Edit", align: "center" },
       { Header: "Delete", accessor: "Delete", align: "center" },
     ],
 
-    rows:  Users.map(item => ({
-      User: <Author image={userimg} name={item.fullName} email={item.mail} />,
-      Role: <Job title={item.role} description="" />,
+    rows:  Groups.map(item => ({
+      groupName: <Author image={userimg} groupName={item.groupName} />,
+      studentNB: <Job studentNB={item.studentNB}  />,
       Edit: (
         <MuiLink href='' target="_blank" rel="noreferrer">
           <MDButton color='secondary'>Edit</MDButton>
