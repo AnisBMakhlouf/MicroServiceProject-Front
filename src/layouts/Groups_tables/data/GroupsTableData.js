@@ -36,15 +36,10 @@ export default function data() {
 
   const [Groups, setGroups] = useState([]);
   useEffect(() => {
-<<<<<<< HEAD:src/layouts/Groups_tables/data/GroupsTableData.js
    axios.get("http://localhost:8087/api/group/all",{mode: 'no-cors',}).then((response)=>{
     setGroups(response.data);
   
   
-=======
-   axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
-    setUsers(response.data);
->>>>>>> fe689a3b2c3e17488713f1296c3e4eb61e08cbb8:src/layouts/Groups_tables/data/authorsTableData.js
   }).catch(error=>console.log("api error "))
   }, []);
   console.log(Groups);
