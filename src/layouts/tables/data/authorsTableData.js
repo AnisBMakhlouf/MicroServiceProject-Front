@@ -21,9 +21,7 @@ export default function data() {
   const [ShowForm, setShowUpdateForm] = useState(false);
   const ShowUpdateForm = () => setShowUpdateForm(true);
   const closeUpdateForm = () => setShowUpdateForm(false);
-
-    
-  
+  const [selectedID, setselectedID] = useState(0);
     const handleSubmit = async (fields) => {
       setLoading(true);
       try {
@@ -40,8 +38,17 @@ export default function data() {
       setLoading(false)
     };
     const { form, use } = useForm({
-      defaultValues: { firstName: "", lastName: "", framework: "" },
-      onSubmit: (values) => alert(JSON.stringify(values, undefined, 2))
+      defaultValues: {},
+      onSubmit: (values) => 
+      axios.post("http://localhost:8085/api/user/update/"+values.userID,{ fullName: values.FullName,mail: values.Email,role: values.Role }).then((response)=>{
+
+          axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
+           setUsers(response.data);
+           closeUpdateForm();
+         }).catch(error=>console.log("api error ")) 
+      
+    }).catch(error=>console.log("api error "))
+
     });
     const errors = use("errors");
   const renderUpdateForm = ( 
@@ -52,6 +59,7 @@ export default function data() {
     content={    
       <form style={{ margin:'5rem auto 0', width:'30rem', height:400}} ref={form} noValidate>
       <div style={{ marginBottom:'1.5rem', width:'inherit'}}>
+      <input name="userID" hidden value={selectedID}/>
       <label>Full Name:</label>
         <input style={{ marginBottom:'1.5rem', width:'inherit', padding:'0 0.5rem', height:'2rem', borderRadius:'4px',  boxSizing:'border-box'}} name="FullName" placeholder="Full Name" required />
         {errors.FullName && <p>{errors.FullName}</p>}
@@ -102,7 +110,7 @@ export default function data() {
   );
 
   const [Users, setUsers] = useState([]);
-  const [selectedID, setselectedID] = useState(0);
+  
   function deleteUser(id){
   //   axios.post("http://localhost:8085/api/user/delete/"+id,{mode: 'no-cors',}).then((response)=>{
   //    console.log('deleted');
@@ -128,7 +136,7 @@ export default function data() {
       User: <Author image={userimg} name={item.fullName} email={item.mail} />,
       Role: <Job title={item.role} description="" />,
       Edit: (
-        <MDButton variant="gradient" color="info" size="small" onClick={()=>ShowUpdateForm()}  fullWidth>
+        <MDButton variant="gradient" color="info" size="small" onClick={function(event){setselectedID(item.id);ShowUpdateForm()}}  fullWidth>
            Edit
           {renderUpdateForm}
           </MDButton>),
