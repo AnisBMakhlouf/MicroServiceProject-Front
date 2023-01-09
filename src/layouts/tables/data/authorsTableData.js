@@ -46,28 +46,31 @@ export default function data() {
     const errors = use("errors");
   const renderUpdateForm = ( 
     <MDSnackbar
-    color="success"
-    icon="check"
-    title="test"
+    color=""
+    icon=""
+    title="Edit User"
     content={    
-      <form style={{ margin:40, width:300, height:300}} ref={form} noValidate>
-      <div className="count">Edit User</div>
-      <div>
-        <input style={{ padding:8, width:300, height:32,borderRadius: 4}} name="firstName" placeholder="First name" required />
-        {errors.firstName && <p>{errors.firstName}</p>}
+      <form style={{ margin:'5rem auto 0', width:'30rem', height:400}} ref={form} noValidate>
+      <div style={{ marginBottom:'1.5rem', width:'inherit'}}>
+      <label>Full Name:</label>
+        <input style={{ marginBottom:'1.5rem', width:'inherit', padding:'0 0.5rem', height:'2rem', borderRadius:'4px',  boxSizing:'border-box'}} name="FullName" placeholder="Full Name" required />
+        {errors.FullName && <p>{errors.FullName}</p>}
       </div>
-      <div>
-        <input style={{ padding:8, width:300, height:32,borderRadius: 4}} name="lastName" placeholder="Last name" required />
-        {errors.lastName && <p>{errors.lastName}</p>}
+      <label>Email:</label>
+      <div style={{ marginBottom:'1.5rem', width:'inherit'}}>
+        <input style={{ marginBottom:'1.5rem', width:'inherit', padding:'0 0.5rem', height:'2rem', borderRadius:'4px',  boxSizing:'border-box'}} name="Email" placeholder="Email" required />
+        {errors.Email && <p>{errors.Email}</p>}
       </div>
-      <div>
-      <select style={{ padding:8, width:300, height:32,borderRadius: 4}} name="Role">
+      <div style={{ marginBottom:'1.5rem', width:'inherit'}}>
+        <label>User role:</label>
+      <select style={{ marginBottom:'1.5rem', width:'inherit', padding:'0 0.5rem', height:'2rem', borderRadius:'4px',  boxSizing:'border-box'}} name="Role">
         <option value="Admin">Admin</option>
         <option value="ENS">Enseignant</option>
         <option value="AGT">Agents de Tirage</option>
       </select>
       </div>
-      <input style={{ padding:8, width:300, height:32,borderRadius: 4}} type="submit" />
+
+      <input style={{ marginBottom:'1.5rem', width:'inherit', padding:'0 0.5rem', height:'2rem', borderRadius:'4px',  boxSizing:'border-box'}} type="submit" />
     </form>
     }
     dateTime=""
