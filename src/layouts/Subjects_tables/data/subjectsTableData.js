@@ -13,8 +13,115 @@ import team4 from "assets/images/team-4.jpg";
 import axios from "axios";
 import MDSnackbar from "components/MDSnackbar";
 import Grid from "@mui/material/Grid";
+import { useModalForm } from 'sunflower-antd';
+import { Modal, Input, Button, Form, Spin, Select } from 'antd';
 export default function data() {
+  const [ShowForm, setShowUpdateForm] = useState(false);
+  const ShowUpdateForm = () => setShowUpdateForm(true);
+  const closeUpdateForm = () => setShowUpdateForm(false);
+ 
+  useEffect(() => {
+    axios.get("http://localhost:8088/api/subject/getById/"+selectedID,{mode: 'no-cors',}).then((response)=>{
+    
+     setnom_Ens(response.data.nom_Ens);
+    
+     setnom_Group(response.data.nom_Group);
+    
+     
+
+  }).catch(error=>console.log("api error "))
+    
+  });
+
   
+
+  const [form] = Form.useForm();
+  const {
+    modalProps,
+    formProps,
+    show,
+    formLoading,
+    formValues,
+    formResult,
+  } = useModalForm({
+    defaultVisible: false,
+    autoSubmitClose: true,
+    autoResetForm: true,
+    async submit({ username, email, Role }) {
+      console.log('beforeSubmit');
+      axios.post("http://localhost:8088/api/subject/update/"+selectedID,{ subject_name: subjectName,id_Ens: id_Ens,id_Group: id_Group }).then((response)=>{
+        axios.get("http://localhost:8088/api/subject/all",{mode: 'no-cors',}).then((response)=>{
+          setUsers(response.data);
+        }).catch(error=>console.log("api error "))
+      })
+      console.log('afterSubmit', username, email);
+      return 'ok';
+    },
+    form,
+  });
+  const ModalForm = (
+    <div>
+      <Modal {...modalProps} title="Edit Subject" okText="submit" width={600}>
+        <Spin spinning={formLoading}>
+          <>
+            <p>
+              submit: subjectname {formValues.subject_name} email {formValues.nom_Ens} Role {formValues.nom_Group}
+            </p>
+            
+            <Form layout="inline" {...formProps}>
+              <Form.Item
+                label="subjectname"
+                name="subjectname"
+                rules={[{ required: true, message: 'Please input subjectname' }]}
+              >
+                <Input placeholder="subjectname" />
+              </Form.Item>
+
+              <Form.Item
+                label="nom_Ens"
+                name="nom_Ens"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input nom_Ens',
+                    type: 'nom_Ens',
+                  },
+                ]}
+              >
+                <Input placeholder="nom_Ens" />
+              </Form.Item>
+              
+              <Form.Item
+                label="nom_Group"
+                name="nom_Group"
+                rules={[{  }]}
+              >
+                <Select
+                  defaultValue=""
+                  style={{ width: 120 }}
+                  allowClear
+                  options={[
+                    {
+                      value: 'Admin',
+                      label: 'Admin',
+                    },
+                    {
+                      value: 'Ens',
+                      label: 'Ens',
+                    },
+                    {
+                      value: 'AGT',
+                      label: 'AGT',
+                    },
+                  ]}
+                />
+              </Form.Item>
+            </Form>
+          </>
+        </Spin>
+      </Modal>
+      
+    </div>);
   const Author = ({ image, name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />
@@ -46,19 +153,14 @@ export default function data() {
   const [nom_Ens, setnom_Ens] = useState('');
 
   const [nom_Group, setnom_Group] = useState('');
- 
-  useEffect(() => {
-     axios.get("http://localhost:8088/api/subject/getById/"+selectedID,{mode: 'no-cors',}).then((response)=>{
-     
-      setnom_Ens(response.data.nom_Ens);
-     
-      setnom_Group(response.data.nom_Group);
-     
-      
 
-   }).catch(error=>console.log("api error "))
-     
-   });
+
+
+
+
+
+   
+
   const renderSuccessSB = ( 
   <MDSnackbar
   color="success"
@@ -74,7 +176,7 @@ export default function data() {
     </MDTypography>
   </MDBox>
 </MDBox>}
- 
+  dateTime=""
   open={successSB}
   onClose={closeSuccessSB}
   close={closeSuccessSB}
@@ -96,7 +198,8 @@ export default function data() {
     columns: [
       { Header: "subjectName", accessor: "subjectName", width: "20%", align: "left" },
       { Header: "Info", accessor: "Info", align: "center" },
-      
+      { Header: "Edit", accessor: "Edit", align: "center" },
+      { Header: "Delete", accessor: "Delete", align: "center" },
     ],
 
     rows:  sujectReq.map(item => ({
@@ -109,6 +212,17 @@ export default function data() {
          
           
         ),
+        Edit: (
+          <MDButton variant="gradient" color="info" size="small" onClick={function(event){setselectedID(item.id);ShowUpdateForm()}}  fullWidth>
+             Edit
+           
+            </MDButton>
+          ),
+          Delete: (
+            <MuiLink href='' target="_self" rel="noreferrer">
+              <MDButton onclick='' color='error'>Delete</MDButton>
+            </MuiLink>)
+        
       }),
     )
   };
