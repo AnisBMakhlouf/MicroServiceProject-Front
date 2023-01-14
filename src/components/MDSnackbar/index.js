@@ -58,7 +58,7 @@ function MDSnackbar({ color, icon, title, dateTime, content, close, bgWhite, ...
   return (
     <Snackbar
       TransitionComponent={Fade}
-      
+      autoHideDuration={15000}
       anchorOrigin={{
         vertical: "top",
         horizontal: "center",

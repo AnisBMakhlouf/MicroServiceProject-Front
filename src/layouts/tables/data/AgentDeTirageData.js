@@ -9,85 +9,105 @@ import axios from "axios";
 import ReactDOM from 'react-dom'
 import MDSnackbar from "components/MDSnackbar";
 import React from 'react';
-import Form, {
-  FormThemeProvider,
-  Input,
-  SubmitButton
-} from 'react-form-component';
-import { useForm } from "react-cool-form";
-import { Margin } from "@mui/icons-material";
-import { height, width } from "@mui/system";
+
+import { useModalForm } from 'sunflower-antd';
+import { Modal, Input, Button, Form, Spin, Select } from 'antd';
+
 export default function data() {
   const [ShowForm, setShowUpdateForm] = useState(false);
   const ShowUpdateForm = () => setShowUpdateForm(true);
   const closeUpdateForm = () => setShowUpdateForm(false);
   const [selectedID, setselectedID] = useState(0);
-    const handleSubmit = async (fields) => {
-      setLoading(true);
-      try {
-        // API login call.
-        const resp = await axios.get(
-          'https://reqres.in/api/login?delay=1',
-          fields
-        );
-        console.log(resp);
-        alert("Successfuly logged in!")
-      } catch (err) {
-        alert("There was an error during login")
-      }
-      setLoading(false)
-    };
-    const { form, use } = useForm({
-      defaultValues: {},
-      onSubmit: (values) => 
-      axios.post("http://localhost:8085/api/user/update/"+values.userID,{ fullName: values.FullName,mail: values.Email,role: values.Role }).then((response)=>{
 
-          axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
-           setUsers(response.data);
-           closeUpdateForm();
-         }).catch(error=>console.log("api error ")) 
+  const [form] = Form.useForm();
+  const {
+    modalProps,
+    formProps,
+    show,
+    formLoading,
+    formValues,
+    formResult,
+  } = useModalForm({
+    defaultVisible: false,
+    autoSubmitClose: true,
+    autoResetForm: true,
+    async submit({ username, email, Role }) {
+      console.log('beforeSubmit');
+      axios.post("http://localhost:8085/api/user/update/"+selectedID,{ fullName: username,mail: email,role: Role }).then((response)=>{
+        axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
+          setUsers(response.data);
+        }).catch(error=>console.log("api error "))
+      })
+      console.log('afterSubmit', username, email);
+      return 'ok';
+    },
+    form,
+  });
+  const ModalForm = (
+    <div>
+      <Modal {...modalProps} title="Edit User" okText="submit" width={600}>
+        <Spin spinning={formLoading}>
+          <>
+            <p>
+              submit: username {formValues.username} email {formValues.email} Role {formValues.Role}
+            </p>
+            
+            <Form layout="inline" {...formProps}>
+              <Form.Item
+                label="Username"
+                name="username"
+                rules={[{ required: true, message: 'Please input username' }]}
+              >
+                <Input placeholder="Username" />
+              </Form.Item>
+
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input email',
+                    type: 'email',
+                  },
+                ]}
+              >
+                <Input placeholder="Email" />
+              </Form.Item>
+              
+              <Form.Item
+                label="Role"
+                name="Role"
+                rules={[{  }]}
+              >
+                <Select
+                  defaultValue=""
+                  style={{ width: 120 }}
+                  allowClear
+                  options={[
+                    {
+                      value: 'Admin',
+                      label: 'Admin',
+                    },
+                    {
+                      value: 'Ens',
+                      label: 'Ens',
+                    },
+                    {
+                      value: 'AGT',
+                      label: 'AGT',
+                    },
+                  ]}
+                />
+              </Form.Item>
+            </Form>
+          </>
+        </Spin>
+      </Modal>
       
-    }).catch(error=>console.log("api error "))
+    </div>);
 
-    });
-    const errors = use("errors");
-  const renderUpdateForm = ( 
-    <MDSnackbar
-    color=""
-    icon=""
-    title="Edit User"
-    content={    
-      <form style={{ margin:'5rem auto 0', width:'30rem', height:400}} ref={form} noValidate>
-      <div style={{ marginBottom:'1.5rem', width:'inherit'}}>
-      <input name="userID" hidden value={selectedID}/>
-      <label>Full Name:</label>
-        <input style={{ marginBottom:'1.5rem', width:'inherit', padding:'0 0.5rem', height:'2rem', borderRadius:'4px',  boxSizing:'border-box'}} name="FullName" placeholder="Full Name" required />
-        {errors.FullName && <p>{errors.FullName}</p>}
-      </div>
-      <label>Email:</label>
-      <div style={{ marginBottom:'1.5rem', width:'inherit'}}>
-        <input style={{ marginBottom:'1.5rem', width:'inherit', padding:'0 0.5rem', height:'2rem', borderRadius:'4px',  boxSizing:'border-box'}} name="Email" placeholder="Email" required />
-        {errors.Email && <p>{errors.Email}</p>}
-      </div>
-      <div style={{ marginBottom:'1.5rem', width:'inherit'}}>
-        <label>User role:</label>
-      <select style={{ marginBottom:'1.5rem', width:'inherit', padding:'0 0.5rem', height:'2rem', borderRadius:'4px',  boxSizing:'border-box'}} name="Role">
-        <option value="Admin">Admin</option>
-        <option value="ENS">Enseignant</option>
-        <option value="AGT">Agents de Tirage</option>
-      </select>
-      </div>
 
-      <input style={{ marginBottom:'1.5rem', width:'inherit', padding:'0 0.5rem', height:'2rem', borderRadius:'4px',  boxSizing:'border-box'}} type="submit" />
-    </form>
-    }
-    dateTime=""
-    open={ShowForm}
-    onClose={closeUpdateForm}
-    close={closeUpdateForm}
-    bgWhite
-  />
-  );
   const Author = ({ image, name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />
@@ -136,9 +156,9 @@ export default function data() {
       User: <Author image={userimg} name={item.fullName} email={item.mail} />,
       Role: <Job title={item.role} description="" />,
       Edit: (
-        <MDButton variant="gradient" color="info" size="small" onClick={function(event){setselectedID(item.id);ShowUpdateForm()}}  fullWidth>
+        <MDButton variant="gradient" color="info" size="small" onClick={function(event){setselectedID(item.id);show()}}  fullWidth>
            Edit
-          {renderUpdateForm}
+          {ModalForm}
           </MDButton>),
       Delete: (
         <MuiLink href='' target="_self" rel="noreferrer">

@@ -96,6 +96,7 @@ export default function data() {
     
   }, []);
   console.log(PrintReq);
+
   return {
     columns: [
       { Header: "Object", accessor: "Object", width: "20%", align: "left" },
@@ -104,6 +105,7 @@ export default function data() {
       { Header: "Number", accessor: "Number", align: "left" },
       { Header: "status", accessor: "status", align: "center" },
       { Header: "Info", accessor: "Info", align: "center" },
+      { Header: "DownloadFile", accessor: "DownloadFile", align: "center" },
     ],
 
     rows:  PrintReq.map(item => ({
@@ -125,9 +127,13 @@ export default function data() {
           <MDButton variant="gradient" color="info" size="small" onClick={function(event){ setselectedID(item.id);setSelectedReq();openSuccessSB();}}  fullWidth>
            info
           {renderSuccessSB}
-          </MDButton>
-                    
-          
+          </MDButton> 
+        ),
+        DownloadFile: (
+          <MDButton variant="gradient" color="info" size="small" onClick={function(event){ setselectedID(item.id);setSelectedReq();openSuccessSB();}}  fullWidth>
+           Download
+          {renderSuccessSB}
+          </MDButton> 
         ),
       }),
     )
