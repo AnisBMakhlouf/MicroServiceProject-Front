@@ -17,6 +17,7 @@
     "npm": ">=6"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.0.0",
     "@emotion/cache": "11.7.1",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",

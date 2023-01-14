@@ -5,35 +5,26 @@ import { useState, useEffect } from 'react';
 // IIT Printing Management components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
 // IIT Printing Management example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
-import Icon from "@mui/material/Icon";
-import IconButton from "@mui/material/IconButton";
 import breakpoints from "assets/theme/base/breakpoints";
 // Data
 import GroupsTableData from "layouts/Groups_tables/data/GroupsTableData";
-
 import AppBar from "@mui/material/AppBar";
-
-
-
 import MDButton from "components/MDButton";
 import { useModalForm } from 'sunflower-antd';
 import { Modal, Input, Button, Form, Spin, Select } from 'antd';
 import React from 'react';
 import axios from "axios";
-import { render } from "@testing-library/react";
+import { InboxOutlined } from '@ant-design/icons';
+import { message, Upload } from 'antd';
 
 function GroupTables() {
   const { columns, rows } = GroupsTableData();
-  
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
-
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
     function handleTabsOrientation() {
@@ -41,15 +32,12 @@ function GroupTables() {
         ? setTabsOrientation("vertical")
         : setTabsOrientation("horizontal");
     }
-
     /** 
      The event listener that's calling the handleTabsOrientation function when resizing the window.
     */
     window.addEventListener("resize", handleTabsOrientation);
-
     // Call the handleTabsOrientation function to set the state with the initial value.
     handleTabsOrientation();
-
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
@@ -71,7 +59,7 @@ function GroupTables() {
     async submit({ groupName, studentNB }) {
       console.log('beforeSubmit');
       axios.post("http://localhost:8087/api/group/create",{ groupName: groupName,studentNB: studentNB }).then((response)=>{
-        
+        window.location.reload(false);
       }
       )
       console.log('afterSubmit',groupName, studentNB );

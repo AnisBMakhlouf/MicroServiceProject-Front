@@ -1,25 +1,12 @@
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-import MDBadge from "components/MDBadge";
 import MDButton from "components/MDButton";
 import { useState, useEffect } from 'react';
-import MuiLink from "@mui/material/Link";
-import { Link } from "react-router-dom";
 import userimg from "assets/images/logos/user.png";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
 import axios from "axios";
-import ReactDOM from 'react-dom'
-import { Group } from "@mui/icons-material";
-
-
 import { useModalForm } from 'sunflower-antd';
 import { Modal, Input, Button, Form, Spin, Select } from 'antd';
-
-import { Margin } from "@mui/icons-material";
-import { height, width } from "@mui/system";
-import MDSnackbar from "components/MDSnackbar";
 export default function data() {
   const [Groups, setGroups] = useState([]);
   const [selectedID, setselectedID] = useState(0);
@@ -101,7 +88,7 @@ export default function data() {
       console.log('beforeSubmit');
       axios.post("http://localhost:8087/api/group/update/"+selectedID,{ groupName: groupName,studentNB: studentNB }).then((response)=>{
         axios.get("http://localhost:8087/api/group/all",{mode: 'no-cors',}).then((response)=>{
-          setUsers(response.data);
+          setGroups(response.data);
           
         }).catch(error=>console.log("api error "))
       })

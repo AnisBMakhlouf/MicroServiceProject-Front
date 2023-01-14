@@ -66,7 +66,7 @@ function Tables() {
     async submit({ username, email, Role }) {
       console.log('beforeSubmit');
       axios.post("http://localhost:8085/api/user/create",{ fullName: username,mail: email,role: Role }).then((response)=>{
-        
+        window.location.reload(false);
       }
       )
       console.log('afterSubmit', username, email);
