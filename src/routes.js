@@ -2,6 +2,7 @@
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import GroupTables from "layouts/Groups_tables";
+import SubjectsTables from "layouts/Subjects_tables";
 import PrintRequests_tables from "layouts/PrintRequests_tables";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
@@ -52,7 +53,7 @@ const routes = [
     key: "Subjects",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/Subjects_tables",
-    component: <Tables />,
+    component: <SubjectsTables />,
   },
   {
     type: "collapse",

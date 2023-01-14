@@ -15,14 +15,15 @@ import Icon from "@mui/material/Icon";
 import IconButton from "@mui/material/IconButton";
 import breakpoints from "assets/theme/base/breakpoints";
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import EnsTableData from "layouts/tables/data/EnsTableData";
+import subjectsTableData from "layouts/Subjects_tables/data/subjectsTableData";
+
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-function Tables() {
-  const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = EnsTableData();
+function SubjectsTables
+() {
+  const { columns, rows } = subjectsTableData();
+  
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
@@ -52,29 +53,7 @@ function Tables() {
     <DashboardLayout>
       <DashboardNavbar />
       <AppBar position="static">
-              <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue} onclick={console.log(tabValue)}>
-                <Tab
-                  label="Admins"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                    </Icon>
-                  }
-                />
-                <Tab
-                  label="Enseignants"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }} color="action">
-                    </Icon>
-                  }
-                />
-                <Tab
-                  label="Agents de Tirage"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                    </Icon>
-                  }
-                />
-              </Tabs>
+              
             </AppBar>
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
@@ -91,36 +70,18 @@ function Tables() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                {(() => {
-                  switch (tabValue) {
-                    case 0:
-                      return 'Admins'
-                    case 1:
-                      return 'Enseignants'
-                    case 2:
-                      return 'Agents de Tirage'
-                  }
-                })()}
+               Groups
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-              {(() => {
-                  switch (tabValue) {
-                    case 0:
-                      return <DataTable
+              <DataTable
                       table={{ columns, rows }}
                       isSorted={false}
                       entriesPerPage={false}
                       showTotalEntries={false}
                       noEndBorder
                     />
-                    case 1:
-                      return ''
-                    case 2:
-                      return ''
-                  }
-                })()}
-                
+                    
               </MDBox>
             </Card>
           </Grid>
@@ -130,4 +91,5 @@ function Tables() {
   );
 }
 
-export default Tables;
+export default SubjectsTables
+;
