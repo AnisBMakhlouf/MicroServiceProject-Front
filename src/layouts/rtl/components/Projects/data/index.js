@@ -6,7 +6,7 @@
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Copyright 2022  (https://www.creative-tim.com)
 
 Coded by www.creative-tim.com
 
@@ -90,7 +90,7 @@ export default function data() {
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Copyright 2022  (https://www.creative-tim.com)
 
 Coded by www.creative-tim.com
 

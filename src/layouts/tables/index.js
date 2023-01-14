@@ -171,11 +171,13 @@ function Tables() {
                 mx={2}
                 mt={-3}
                 py={3}
-                px={2}
-                variant="gradient"
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
+                
+                pt={2} px={2}
+                variant="gradient"
+                display="flex" justifyContent="space-between" alignItems="center"
               >
                 <MDTypography variant="h6" color="white">
                 {(() => {
@@ -192,10 +194,10 @@ function Tables() {
                   }
                 })()}
                 </MDTypography>
-                <MDButton variant="gradient" color="white" size="small" onClick={function(event){show()}}  >
-           Add
-           {ModalNewForm}
-          </MDButton>
+                <MDButton variant="gradient" color="dark"  onClick={function(event){show()}}>
+                <Icon sx={{ fontWeight: "bold" }}>add</Icon>
+                &nbsp;add new user{ModalNewForm}
+              </MDButton>
               </MDBox>
               <MDBox pt={3}>
                 <DataTable

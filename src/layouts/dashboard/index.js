@@ -1,19 +1,3 @@
-/**
-=========================================================
-* IIT Printing Management - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
 import Grid from "@mui/material/Grid";
 
 // IIT Printing Management components
@@ -34,26 +18,45 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
-
+import React from 'react';
+import axios from "axios";
+import { useState, useEffect } from 'react';
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
-
+  const [Users, setUsers] = useState(0);
+  const [SelectedReq, setSelectedReq] = useState(0);
+  const [sujectReq, setSubjectReq] = useState(0);
+  const [Groups, setGroups] = useState(0);
+  useEffect(() => {
+    axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
+     setUsers(response.data);
+   }).catch(error=>console.log("api error "));
+   axios.get("http://localhost:8086/api/Impression/all",{mode: 'no-cors',}).then((response)=>{
+    setSelectedReq(response.data);
+    }).catch(error=>console.log("api error "));
+    axios.get("http://localhost:8088/api/subject/all",{mode: 'no-cors',}).then((response)=>{
+    setSubjectReq(response.data);
+  }).catch(error=>console.log("api error "));
+  axios.get("http://localhost:8087/api/group/all",{mode: 'no-cors',}).then((response)=>{
+    setGroups(response.data);
+  }).catch(error=>console.log("api error "))
+   }, []);
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} >
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="dark"
                 icon="weekend"
-                title="Bookings"
-                count={281}
+                title="Users"
+                count={Users.length}
                 percentage={{
                   color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  amount: "",
+                  label: "",
                 }}
               />
             </MDBox>
@@ -62,12 +65,10 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="leaderboard"
-                title="Today's Users"
-                count="2,300"
+                title="Printing Requests"
+                count={SelectedReq.length}
                 percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
+                  
                 }}
               />
             </MDBox>
@@ -77,12 +78,9 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="success"
                 icon="store"
-                title="Revenue"
-                count="34k"
+                title="Groups"
+                count={Groups.length}
                 percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
                 }}
               />
             </MDBox>
@@ -92,12 +90,10 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="primary"
                 icon="person_add"
-                title="Followers"
-                count="+91"
+                title="Subjects"
+                count={sujectReq.length}
                 percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "Just updated",
+                 
                 }}
               />
             </MDBox>

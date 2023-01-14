@@ -34,7 +34,9 @@ export default function data() {
   });
 
   
-
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState('Are you sure you want to delete the subject' );
   const [form] = Form.useForm();
   const {
     modalProps,
@@ -51,7 +53,7 @@ export default function data() {
       console.log('beforeSubmit');
       axios.post("http://localhost:8088/api/subject/update/"+selectedID,{ subject_name: subjectName,id_Ens: id_Ens,id_Group: id_Group }).then((response)=>{
         axios.get("http://localhost:8088/api/subject/all",{mode: 'no-cors',}).then((response)=>{
-          setUsers(response.data);
+          setSubjectReq(response.data);
         }).catch(error=>console.log("api error "))
       })
       console.log('afterSubmit', username, email);
@@ -153,14 +155,50 @@ export default function data() {
   const [nom_Ens, setnom_Ens] = useState('');
 
   const [nom_Group, setnom_Group] = useState('');
+  const showModal = () => {
+    setOpen(true);
+  };
 
+  const handleOk = () => {
+    setModalText('Deleteing...');
+    axios.post("http://localhost:8088/api/subject/delete/"+selectedID,{mode: 'no-cors',}).then((response)=>{
+      axios.get("http://localhost:8088/api/subject/all",{mode: 'no-cors',}).then((response)=>{
+        setSubjectReq(response.data);
+  }).catch(error=>console.log("api error "))
+     return false;
+    }).catch(error=>console.log("api error "))
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setOpen(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
 
+  const handleCancel = () => {
+    console.log('Clicked cancel button');
+    setOpen(false);
+  };
+  const clearState = () => {
+    setselectedID(0)
+    setselectedgroupName('')
+    setselectedstudentNB('')
+  
+  }
+  const DeleteModal =(
+    <>
 
-
-
-
-   
-
+      <Modal
+        title="Delete Subject ?"
+        open={open}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+        centered
+      >
+        <p>{modalText}</p>
+      </Modal>
+    </>
+  ) 
   const renderSuccessSB = ( 
   <MDSnackbar
   color="success"
@@ -219,9 +257,8 @@ export default function data() {
             </MDButton>
           ),
           Delete: (
-            <MuiLink href='' target="_self" rel="noreferrer">
-              <MDButton onclick='' color='error'>Delete</MDButton>
-            </MuiLink>)
+              <MDButton onClick={function(event){setselectedID(item.id);showModal()}} color='error'>Delete
+              {DeleteModal}</MDButton>)
         
       }),
     )

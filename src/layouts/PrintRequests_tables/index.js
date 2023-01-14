@@ -207,14 +207,15 @@ async function fetchData(){
           <Grid item xs={12}>
             <Card>
               <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
+                             mx={2}
+                             mt={-3}
+                             py={3}
+                             bgColor="info"
+                             borderRadius="lg"
+                             coloredShadow="info"
+                             pt={2} px={2}
+                             variant="gradient"
+                             display="flex" justifyContent="space-between" alignItems="center"
               >
                 <MDTypography variant="h6" color="white">
                 {(() => {
@@ -232,10 +233,10 @@ async function fetchData(){
                   }
                 })()}
                 </MDTypography>
-                <MDButton variant="gradient" color="white" size="small" onClick={function(event){fetchData();show()}}  >
-           Add
-           {ModalNewForm}
-          </MDButton>
+          <MDButton variant="gradient" color="dark"  onClick={function(event){fetchData();show()}}>
+                <Icon sx={{ fontWeight: "bold" }}>add</Icon>
+                &nbsp;add new print request{ModalNewForm}
+              </MDButton>
               </MDBox>
               <MDBox pt={3}>
               <DataTable

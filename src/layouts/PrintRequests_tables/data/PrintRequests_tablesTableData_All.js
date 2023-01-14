@@ -10,6 +10,7 @@ import axios from "axios";
 import MDSnackbar from "components/MDSnackbar";
 import React from 'react';
 import { Modal, Input, Button, Form, Spin, Select } from 'antd';
+import Icon from "@mui/material/Icon";
 export default function data() {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -141,7 +142,7 @@ export default function data() {
       { Header: "Number", accessor: "Number", align: "center" },
       { Header: "status", accessor: "status", align: "center" },
       { Header: "Info", accessor: "Info", align: "center" },
-      { Header: "DownloadFile", accessor: "DownloadFile", align: "center" },
+      { Header: "Download", accessor: "Download", align: "center" },
       { Header: "Done", accessor: "Done", align: "center" },
     ],
 
@@ -160,16 +161,18 @@ export default function data() {
           </MDBox>
         ),
         Info: (
-          <MDButton variant="gradient" color="info" size="small" onClick={function(event){ setselectedID(item.id);setSelectedReq();openSuccessSB();}}  fullWidth>
-           info
+          <MDButton variant="text" color="info" size="small" onClick={function(event){ setselectedID(item.id);setSelectedReq();openSuccessSB();}}  fullWidth>
+           <Icon>edit</Icon>&nbsp;info
           {renderSuccessSB}
           </MDButton> 
         ),
-        DownloadFile: (
-          <MDButton variant="gradient" color="info" size="small" onClick={function(event){ setselectedID(item.id);setSelectedReq();openSuccessSB();}}  fullWidth>
-           Download
-          {renderSuccessSB}
-          </MDButton> 
+        Download: (
+          <MDBox display="flex" alignItems="center" lineHeight={1} ml={3} sx={{ cursor: "pointer" }}>
+          <Icon fontSize="small">picture_as_pdf</Icon>
+          <MDTypography variant="button" fontWeight="bold">
+            &nbsp;PDF
+          </MDTypography>
+        </MDBox> 
         ),
         Done: (item.status == 'Pending' ? 
           <MDButton variant="gradient" color='success' size="small"  onClick={function(event){ setselectedID(item.id);setSelectedReq();showModal();}}  fullWidth>

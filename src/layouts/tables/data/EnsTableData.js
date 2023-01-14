@@ -9,7 +9,7 @@ import axios from "axios";
 import ReactDOM from 'react-dom'
 import MDSnackbar from "components/MDSnackbar";
 import React from 'react';
-
+import Icon from "@mui/material/Icon";
 import { useModalForm } from 'sunflower-antd';
 import { Modal, Input, Button, Form, Spin, Select } from 'antd';
 
@@ -200,15 +200,16 @@ export default function data() {
       User: <Author image={userimg} name={item.fullName} email={item.mail} />,
       Role: <Job title={item.role} description="" />,
       Edit: (
-        <MDButton variant="gradient" color="info" size="small" onClick={function(event){clearState();setselectedID(item.id);setselectedFullName(item.fullName);setselectedEmail(item.mail);setselectedRole(item.role);show()}}  fullWidth>
+        <MDButton variant="text" color="info" onClick={function(event){clearState();setselectedID(item.id);setselectedFullName(item.fullName);setselectedEmail(item.mail);setselectedRole(item.role);show()}}  fullWidth>
+          <Icon>edit</Icon>&nbsp;
            Edit
           {ModalForm}
           </MDButton>),
       Delete: (
-
-          <MDButton onClick={function(event){setselectedID(item.id);setselectedFullName(item.fullName);showModal()}} color='error'>Delete
-          {DeleteModal}
-          </MDButton>)
+        <MDButton onClick={function(event){setselectedID(item.id);setselectedFullName(item.fullName);showModal()}} variant="text" color="error">
+                <Icon>delete</Icon>&nbsp;Delete
+                {DeleteModal}
+              </MDButton>)
       })
     )
   };
