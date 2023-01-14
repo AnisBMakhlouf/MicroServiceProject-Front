@@ -14,11 +14,32 @@ import { useModalForm } from 'sunflower-antd';
 import { Modal, Input, Button, Form, Spin, Select } from 'antd';
 
 export default function data() {
-  const [ShowForm, setShowUpdateForm] = useState(false);
-  const ShowUpdateForm = () => setShowUpdateForm(true);
-  const closeUpdateForm = () => setShowUpdateForm(false);
-  const [selectedID, setselectedID] = useState(0);
+  const [Users, setUsers] = useState([]);
+  
+  function deleteUser(id){
+  //   axios.post("http://localhost:8085/api/user/delete/"+id,{mode: 'no-cors',}).then((response)=>{
+  //    console.log('deleted');
+  //   return false;
+  //  }).catch(error=>console.log("api error "))
+  };
+  useEffect(() => {
+   axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
+    setUsers(response.data);
+  }).catch(error=>console.log("api error "))
+    
+  }, []);
+  console.log(Users);
 
+  const [selectedID, setselectedID] = useState(0);
+  const [selectedFullName, setselectedFullName] = useState('');
+  const [selectedEmail, setselectedEmail] = useState('');
+  const [selectedRole, setselectedRole] = useState('');
+  const clearState = () => {
+    setselectedID(0)
+    setselectedFullName('')
+    setselectedEmail('')
+    setselectedRole('')
+  }
   const [form] = Form.useForm();
   const {
     modalProps,
@@ -27,6 +48,7 @@ export default function data() {
     formLoading,
     formValues,
     formResult,
+    defaultFormValuesLoading,
   } = useModalForm({
     defaultVisible: false,
     autoSubmitClose: true,
@@ -36,6 +58,7 @@ export default function data() {
       axios.post("http://localhost:8085/api/user/update/"+selectedID,{ fullName: username,mail: email,role: Role }).then((response)=>{
         axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
           setUsers(response.data);
+          
         }).catch(error=>console.log("api error "))
       })
       console.log('afterSubmit', username, email);
@@ -45,12 +68,9 @@ export default function data() {
   });
   const ModalForm = (
     <div>
-      <Modal {...modalProps} title="Edit User" okText="submit" width={600}>
+      <Modal {...modalProps} centered title="Edit User" okText="submit" width={600}>
         <Spin spinning={formLoading}>
           <>
-            <p>
-              submit: username {formValues.username} email {formValues.email} Role {formValues.Role}
-            </p>
             
             <Form layout="inline" {...formProps}>
               <Form.Item
@@ -58,9 +78,8 @@ export default function data() {
                 name="username"
                 rules={[{ required: true, message: 'Please input username' }]}
               >
-                <Input placeholder="Username" />
+                <Input placeholder={selectedFullName}/>
               </Form.Item>
-
               <Form.Item
                 label="Email"
                 name="email"
@@ -72,16 +91,17 @@ export default function data() {
                   },
                 ]}
               >
-                <Input placeholder="Email" />
+                <Input placeholder={selectedEmail}/>
               </Form.Item>
               
               <Form.Item
                 label="Role"
                 name="Role"
+                
                 rules={[{  }]}
               >
                 <Select
-                  defaultValue=""
+                  placeholder={selectedRole}
                   style={{ width: 120 }}
                   allowClear
                   options={[
@@ -129,21 +149,7 @@ export default function data() {
     </MDBox>
   );
 
-  const [Users, setUsers] = useState([]);
-  
-  function deleteUser(id){
-  //   axios.post("http://localhost:8085/api/user/delete/"+id,{mode: 'no-cors',}).then((response)=>{
-  //    console.log('deleted');
-  //   return false;
-  //  }).catch(error=>console.log("api error "))
-  };
-  useEffect(() => {
-   axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
-    setUsers(response.data);
-  }).catch(error=>console.log("api error "))
-    
-  }, []);
-  console.log(Users);
+
   return {
     columns: [
       { Header: "User", accessor: "User", width: "45%", align: "left" },
@@ -156,7 +162,7 @@ export default function data() {
       User: <Author image={userimg} name={item.fullName} email={item.mail} />,
       Role: <Job title={item.role} description="" />,
       Edit: (
-        <MDButton variant="gradient" color="info" size="small" onClick={function(event){setselectedID(item.id);show()}}  fullWidth>
+        <MDButton variant="gradient" color="info" size="small" onClick={function(event){clearState();setselectedID(item.id);setselectedFullName(item.fullName);setselectedEmail(item.mail);setselectedRole(item.role);show()}}  fullWidth>
            Edit
           {ModalForm}
           </MDButton>),

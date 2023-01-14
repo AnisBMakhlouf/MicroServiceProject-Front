@@ -18,6 +18,12 @@ import AgentDeTirageData from "layouts/tables/data/AgentDeTirageData";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import MDButton from "components/MDButton";
+import { useModalForm } from 'sunflower-antd';
+import { Modal, Input, Button, Form, Spin, Select } from 'antd';
+import React from 'react';
+import axios from "axios";
+import { render } from "@testing-library/react";
 function Tables() {
   let { columns, rows } = authorsTableData();
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
@@ -44,7 +50,91 @@ function Tables() {
   }, [tabsOrientation]);
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
+  const [form] = Form.useForm();
+  const {
+    modalProps,
+    formProps,
+    show,
+    formLoading,
+    formValues,
+    formResult,
+    defaultFormValuesLoading,
+  } = useModalForm({
+    defaultVisible: false,
+    autoSubmitClose: true,
+    autoResetForm: true,
+    async submit({ username, email, Role }) {
+      console.log('beforeSubmit');
+      axios.post("http://localhost:8085/api/user/create",{ fullName: username,mail: email,role: Role }).then((response)=>{
+        
+      }
+      )
+      console.log('afterSubmit', username, email);
+      return 'ok';
+    },
+    form,
+  });
+  const ModalNewForm = (
+    <div>
+      <Modal {...modalProps} centered title="Add User" okText="submit" width={600}>
+        <Spin spinning={formLoading}>
+          <>
 
+            
+            <Form layout="inline" {...formProps}>
+              <Form.Item
+                label="Username"
+                name="username"
+                rules={[{ required: true, message: 'Please input username' }]}
+              >
+                <Input placeholder="Username" />
+              </Form.Item>
+
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input email',
+                    type: 'email',
+                  },
+                ]}
+              >
+                <Input placeholder="Email" />
+              </Form.Item>
+              
+              <Form.Item
+                label="Role"
+                name="Role"
+                rules={[{  }]}
+              >
+                <Select
+                  defaultValue=""
+                  style={{ width: 120 }}
+                  allowClear
+                  options={[
+                    {
+                      value: 'Admin',
+                      label: 'Admin',
+                    },
+                    {
+                      value: 'Ens',
+                      label: 'Ens',
+                    },
+                    {
+                      value: 'AGT',
+                      label: 'AGT',
+                    },
+                  ]}
+                />
+              </Form.Item>
+            </Form>
+          </>
+        </Spin>
+      </Modal>
+      
+    </div>);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -102,6 +192,10 @@ function Tables() {
                   }
                 })()}
                 </MDTypography>
+                <MDButton variant="gradient" color="white" size="small" onClick={function(event){show()}}  >
+           Add
+           {ModalNewForm}
+          </MDButton>
               </MDBox>
               <MDBox pt={3}>
                 <DataTable
