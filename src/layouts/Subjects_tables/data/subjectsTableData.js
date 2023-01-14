@@ -15,6 +15,7 @@ import MDSnackbar from "components/MDSnackbar";
 import Grid from "@mui/material/Grid";
 import { useModalForm } from 'sunflower-antd';
 import { Modal, Input, Button, Form, Spin, Select } from 'antd';
+import Icon from "@mui/material/Icon";
 export default function data() {
   const [ShowForm, setShowUpdateForm] = useState(false);
   const ShowUpdateForm = () => setShowUpdateForm(true);
@@ -251,13 +252,13 @@ export default function data() {
           
         ),
         Edit: (
-          <MDButton variant="gradient" color="info" size="small" onClick={function(event){setselectedID(item.id);ShowUpdateForm()}}  fullWidth>
-             Edit
-           
+          <MDButton variant="text" color="info" size="small" onClick={function(event){setselectedID(item.id);ShowUpdateForm()}}  fullWidth>
+             <Icon>edit</Icon>&nbsp;Edit
             </MDButton>
           ),
           Delete: (
-              <MDButton onClick={function(event){setselectedID(item.id);showModal()}} color='error'>Delete
+            <MDButton variant="text" onClick={function(event){setselectedID(item.id);showModal()}} color='error'>
+              <Icon>delete</Icon>&nbsp;Delete
               {DeleteModal}</MDButton>)
         
       }),
