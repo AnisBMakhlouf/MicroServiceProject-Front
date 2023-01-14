@@ -15,13 +15,8 @@ import { Modal, Input, Button, Form, Spin, Select } from 'antd';
 
 export default function data() {
   const [Users, setUsers] = useState([]);
-  
-  function deleteUser(id){
-  //   axios.post("http://localhost:8085/api/user/delete/"+id,{mode: 'no-cors',}).then((response)=>{
-  //    console.log('deleted');
-  //   return false;
-  //  }).catch(error=>console.log("api error "))
-  };
+  const [selectedID, setselectedID] = useState(0);
+
   useEffect(() => {
    axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
     setUsers(response.data);
@@ -30,16 +25,58 @@ export default function data() {
   }, []);
   console.log(Users);
 
-  const [selectedID, setselectedID] = useState(0);
+
   const [selectedFullName, setselectedFullName] = useState('');
   const [selectedEmail, setselectedEmail] = useState('');
   const [selectedRole, setselectedRole] = useState('');
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState('Are you sure you want to delete the user' );
+
+  const showModal = () => {
+    setOpen(true);
+  };
+
+  const handleOk = () => {
+    setModalText('Deleteing...');
+    axios.post("http://localhost:8085/api/user/delete/"+selectedID,{mode: 'no-cors',}).then((response)=>{
+      axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
+    setUsers(response.data);
+  }).catch(error=>console.log("api error "))
+     return false;
+    }).catch(error=>console.log("api error "))
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setOpen(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    console.log('Clicked cancel button');
+    setOpen(false);
+  };
   const clearState = () => {
     setselectedID(0)
     setselectedFullName('')
     setselectedEmail('')
     setselectedRole('')
   }
+  const DeleteModal =(
+    <>
+
+      <Modal
+        title="Delete user ?"
+        open={open}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+        centered
+      >
+        <p>{modalText}</p>
+      </Modal>
+    </>
+  ) 
   const [form] = Form.useForm();
   const {
     modalProps,
@@ -71,6 +108,7 @@ export default function data() {
       <Modal {...modalProps} centered title="Edit User" okText="submit" width={600}>
         <Spin spinning={formLoading}>
           <>
+
             
             <Form layout="inline" {...formProps}>
               <Form.Item
@@ -158,7 +196,7 @@ export default function data() {
       { Header: "Delete", accessor: "Delete", align: "center" },
     ],
 
-    rows:  Users.filter((i)=> i.role=='ENS').map(item => ({
+    rows:  Users.filter((i)=> i.role=='Ens').map(item => ({
       User: <Author image={userimg} name={item.fullName} email={item.mail} />,
       Role: <Job title={item.role} description="" />,
       Edit: (
@@ -167,9 +205,10 @@ export default function data() {
           {ModalForm}
           </MDButton>),
       Delete: (
-        <MuiLink href='' target="_self" rel="noreferrer">
-          <MDButton onclick={deleteUser(item.id)} color='error'>Delete</MDButton>
-        </MuiLink>)
+
+          <MDButton onClick={function(event){setselectedID(item.id);setselectedFullName(item.fullName);showModal()}} color='error'>Delete
+          {DeleteModal}
+          </MDButton>)
       })
     )
   };
