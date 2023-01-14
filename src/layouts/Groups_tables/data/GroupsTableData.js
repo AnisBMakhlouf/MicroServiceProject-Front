@@ -7,6 +7,7 @@ import userimg from "assets/images/logos/user.png";
 import axios from "axios";
 import { useModalForm } from 'sunflower-antd';
 import { Modal, Input, Button, Form, Spin, Select } from 'antd';
+import Icon from "@mui/material/Icon";
 export default function data() {
   const [Groups, setGroups] = useState([]);
   const [selectedID, setselectedID] = useState(0);
@@ -170,13 +171,14 @@ const Job = ({studentNB}) => (
       groupName: <Author image={userimg} groupName={item.groupName} />,
       studentNB: <Job  studentNB={item.studentNB} />,
       Edit: (
-        <MDButton variant="gradient" color="info" size="small" onClick={function(event){clearState();setselectedID(item.id);setselectedgroupName(item.groupName);setselectedstudentNB(item.studentNB);show()}}  fullWidth>
-           Edit
+        <MDButton variant="text" color="info" size="small" onClick={function(event){clearState();setselectedID(item.id);setselectedgroupName(item.groupName);setselectedstudentNB(item.studentNB);show()}}  fullWidth>
+          <Icon>edit</Icon>&nbsp; Edit
           {ModalForm}
           </MDButton>),
       Delete: (
 
-          <MDButton onClick={function(event){setselectedID(item.id);setselectedgroupName(item.groupName);showModal()}} color='error'>Delete
+          <MDButton variant="text" onClick={function(event){setselectedID(item.id);setselectedgroupName(item.groupName);showModal()}} color='error'>
+            <Icon>delete</Icon>&nbsp;Delete
           {DeleteModal}
           </MDButton>)
       })
