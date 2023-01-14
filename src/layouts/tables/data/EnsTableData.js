@@ -196,7 +196,7 @@ export default function data() {
       { Header: "Delete", accessor: "Delete", align: "center" },
     ],
 
-    rows:  Users.filter((i)=> i.role=='ENS').map(item => ({
+    rows:  Users.filter((i)=> i.role=='Ens').map(item => ({
       User: <Author image={userimg} name={item.fullName} email={item.mail} />,
       Role: <Job title={item.role} description="" />,
       Edit: (
