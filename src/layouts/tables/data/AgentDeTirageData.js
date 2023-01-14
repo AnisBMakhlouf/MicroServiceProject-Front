@@ -148,8 +148,8 @@ export default function data() {
                       label: 'Admin',
                     },
                     {
-                      value: 'Ens',
-                      label: 'Ens',
+                      value: 'ENS',
+                      label: 'ENS',
                     },
                     {
                       value: 'AGT',
