@@ -161,8 +161,8 @@ export default function data() {
           </MDBox>
         ),
         Info: (
-          <MDButton variant="text" color="info" size="small" onClick={function(event){ setselectedID(item.id);setSelectedReq();openSuccessSB();}}  fullWidth>
-           <Icon>edit</Icon>&nbsp;info
+          <MDButton variant="text" color="info" size="medium" onClick={function(event){ setselectedID(item.id);setSelectedReq();openSuccessSB();}}  fullWidth>
+           <Icon>info</Icon>&nbsp;info
           {renderSuccessSB}
           </MDButton> 
         ),

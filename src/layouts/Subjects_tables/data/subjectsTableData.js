@@ -244,8 +244,8 @@ export default function data() {
     rows:  sujectReq.map(item => ({
       subjectName: <Author  name={item.subjectName} email={''} />,
         Info: (
-          <MDButton variant="gradient" color="info" size="small" onClick={function(event){ setselectedID(item.id);setSelectedReq();openSuccessSB();}}  fullWidth>
-           info
+          <MDButton variant="text" color="info" size="medium" onClick={function(event){ setselectedID(item.id);setSelectedReq();openSuccessSB();}}  fullWidth>
+             <Icon>info</Icon>&nbsp;info
           {renderSuccessSB}
           </MDButton>
          
