@@ -18,8 +18,16 @@ import breakpoints from "assets/theme/base/breakpoints";
 import GroupsTableData from "layouts/Groups_tables/data/GroupsTableData";
 
 import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+
+
+
+import MDButton from "components/MDButton";
+import { useModalForm } from 'sunflower-antd';
+import { Modal, Input, Button, Form, Spin, Select } from 'antd';
+import React from 'react';
+import axios from "axios";
+import { render } from "@testing-library/react";
+
 function GroupTables() {
   const { columns, rows } = GroupsTableData();
   
@@ -47,7 +55,67 @@ function GroupTables() {
   }, [tabsOrientation]);
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
+  const [form] = Form.useForm();
+  const {
+    modalProps,
+    formProps,
+    show,
+    formLoading,
+    formValues,
+    formResult,
+    defaultFormValuesLoading,
+  } = useModalForm({
+    defaultVisible: false,
+    autoSubmitClose: true,
+    autoResetForm: true,
+    async submit({ groupName, studentNB }) {
+      console.log('beforeSubmit');
+      axios.post("http://localhost:8087/api/group/create",{ groupName: groupName,studentNB: studentNB }).then((response)=>{
+        
+      }
+      )
+      console.log('afterSubmit',groupName, studentNB );
+      return 'ok';
+    },
+    form,
+  });
+  const ModalNewForm = (
+    <div>
+      <Modal {...modalProps} centered title="Add group" okText="submit" width={600}>
+        <Spin spinning={formLoading}>
+          <>
 
+            
+            <Form layout="inline" {...formProps}>
+              <Form.Item
+                label="groupName"
+                name="groupName"
+                rules={[{ required: true, message: 'Please input username' }]}
+              >
+                <Input placeholder="groupName" />
+              </Form.Item>
+
+              <Form.Item
+                label="studentNB"
+                name="studentNB"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input studentNB',
+                   
+                  },
+                ]}
+              >
+                <Input placeholder="studentNB" />
+              </Form.Item>
+              
+             
+            </Form>
+          </>
+        </Spin>
+      </Modal>
+      
+    </div>);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -71,6 +139,10 @@ function GroupTables() {
                 <MDTypography variant="h6" color="white">
                Groups
                 </MDTypography>
+                <MDButton variant="gradient" color="white" size="small" onClick={function(event){show()}}  >
+           Add
+           {ModalNewForm}
+          </MDButton>
               </MDBox>
               <MDBox pt={3}>
               <DataTable
