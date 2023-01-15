@@ -28,6 +28,10 @@ function PrintRequests_tables() {
   let { columns, rows } = PrintRequests_tablesTableData_All();
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
+  const [SelectedGroupId, setSelectedGroupId] = useState(0);
+  const [GroupNumber, setGroupNumber] = useState(0);
+  const [SelectedEnsId, setSelectedEnsId] = useState(0);
+  const [SelectedSubId, setSelectedSubId] = useState(0);
   const [form] = Form.useForm();
   const [SelectedDate, setSelectedDate] = useState([]);
   const {
@@ -44,10 +48,10 @@ function PrintRequests_tables() {
     autoResetForm: true,
     async submit({ Object, Date }) {
       console.log('beforeSubmit');
-      axios.post("http://localhost:8086/api/Impression/create",{ file:Object, date:SelectedDate,status:'Pending',id_Ens:26}).then((response)=>{
+        axios.post("http://localhost:8086/api/Impression/create",{ file:Object, date:SelectedDate,status:'Pending',id_Ens:SelectedEnsId,id_Group:SelectedGroupId,id_Subject:SelectedSubId,nbrCopie:GroupNumber}).then((response)=>{
         window.location.reload(false);
-      }
-      )
+      });
+   
       console.log('afterSubmit', username, email);
       return 'ok';
     },
@@ -58,6 +62,8 @@ function PrintRequests_tables() {
     setSelectedDate(dateString);
   };
   const [Groups, setGroups] = useState([]);
+  const [Subjects, setSubjects] = useState([]);
+  const [Ens, setEns] = useState([]);
   const { Dragger } = Upload;
 const props = {
   name: 'file',
@@ -83,14 +89,29 @@ async function fetchData(){
     setGroups(response.data);
     console.log(Groups);
   })
-  .catch((error) => {
-      console.log(error)
+  await axios.get("http://localhost:8088/api/subject/all",{mode: 'no-cors',}).then((response)=>{
+    setSubjects(response.data);
+  })
+  await axios.get("http://localhost:8085/api/user/all",{mode: 'no-cors',}).then((response)=>{
+    setEns(response.data);
   })
 }
+const onEnsSelectChange = (value) => {
+  setSelectedEnsId(value);
+};
+const onGroupSelectChange = (value) => {
+  setSelectedGroupId(value);
+  axios.get("http://localhost:8087/api/group/getById/"+value,{mode: 'no-cors',}).then((response)=>{
+        setGroupNumber(response.data.studentNB);
+        console.log(response)})
+};
+const onSubjectSelectChange = (value) => {
+  setSelectedSubId(value);
+};
   const ModalNewForm = (
     
     <div>
-      <Modal {...modalProps} centered title="Add User" okText="submit" width={600}>
+      <Modal {...modalProps} centered title="Add Print Request" okText="submit" width={600}>
         <Spin spinning={formLoading}>
           <>
             <Form layout="inline" {...formProps}>
@@ -108,10 +129,25 @@ async function fetchData(){
                 rules={[
                   { }]}>
                  <Space direction="vertical">
-                  <DatePicker onChange={onChange} />
+                  <DatePicker style={{width: 300,}} onChange={onChange} />
                 </Space>
               </Form.Item>
-              
+              <Form.Item
+                label="Enseignant"
+                name="Enseignant"
+                rules={[{  required: true,message: 'Please select Enseignant'}]}
+              >
+                <Select
+                  defaultValue=""
+                  onChange={onEnsSelectChange}
+                  style={{width: 300,}}
+                  allowClear
+                  options={Ens.filter((i)=> i.role=='Ens').map(item => ({
+                    value: item.id,
+                    label: item.fullName,
+                   }))}
+                />
+              </Form.Item>
               <Form.Item
                 label="Group"
                 name="Group"
@@ -119,11 +155,28 @@ async function fetchData(){
               >
                 <Select
                   defaultValue=""
-                  style={{ width: 120 }}
+                  onChange={onGroupSelectChange}
+                  style={{width: 300,}}
                   allowClear
                   options={Groups.map(item => ({
                     value: item.id,
                     label: item.groupName,
+                   }))}
+                />
+              </Form.Item>
+              <Form.Item
+                label="Subject"
+                name="Subject"
+                rules={[{  required: true,message: 'Please select Subject'}]}
+              >
+                <Select
+                  defaultValue=""
+                  onChange={onSubjectSelectChange}
+                  style={{width: 300,}}
+                  allowClear
+                  options={Subjects.filter((i)=> i.id_Ens==SelectedEnsId && i.id_Group==SelectedGroupId).map(item => ({
+                    value: item.id,
+                    label: item.subjectName,
                    }))}
                 />
               </Form.Item>

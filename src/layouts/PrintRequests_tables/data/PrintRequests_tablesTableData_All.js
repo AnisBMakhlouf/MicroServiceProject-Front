@@ -81,7 +81,7 @@ export default function data() {
       setReq_Date(response.data.date);
       setReq_title(response.data.file);
 
-   }).catch(error=>console.log("api error "))
+   }).catch(error=>console.log("api error info"))
      
    });
   const renderSuccessSB = ( 
@@ -167,12 +167,10 @@ export default function data() {
           </MDButton> 
         ),
         Download: (
-          <MDBox display="flex" alignItems="center" lineHeight={1} ml={3} sx={{ cursor: "pointer" }}>
-          <Icon fontSize="small">picture_as_pdf</Icon>
-          <MDTypography variant="button" fontWeight="bold">
+          <MDButton variant="button" fontWeight="bold" onClick={function(event){ window.open(item.fileContent, 'Download');}}>
+                      <Icon fontSize="small">picture_as_pdf</Icon>
             &nbsp;PDF
-          </MDTypography>
-        </MDBox> 
+          </MDButton>
         ),
         Done: (item.status == 'Pending' ? 
           <MDButton variant="gradient" color='success' size="small"  onClick={function(event){ setselectedID(item.id);setSelectedReq();showModal();}}  fullWidth>
